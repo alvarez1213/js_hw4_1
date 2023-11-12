@@ -23,9 +23,9 @@ document.addEventListener("click", (e) => {
 })
 
 document.addEventListener("mouseout", () => {
-    const tip = [...document.querySelectorAll('.tooltip')]
+    const tips = [...document.querySelectorAll('.tooltip')]
     
-    for (const t of tip) {
+    for (const t of tips) {
         if (t != null) {        
             // TODO: можно удалить класс активности 
             // или удалить элемент целиком, вопрос: что лучше?
