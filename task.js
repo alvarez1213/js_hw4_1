@@ -1,37 +1,28 @@
-document.addEventListener("click", (e) => {
-    // получаем таргет
-    const target = e.target    
+const tips = [...document.querySelectorAll('.has-tooltip')]
 
-    // проверяем является ли элемент подсказкой
-    if (Array.from(target.classList).includes('has-tooltip')) {        
+for (const tip of tips) {
+    tip.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const tipActive = document.querySelector('.tooltip_active');
+        if (tipActive) {
+            tipActive.remove();
+            if (tipActive.textContent === tip.getAttribute('title')) {
+                return;
+            }        
+        } 
+
         // определяем координаты таргета
-        let targetRect = target.getBoundingClientRect()
+        let targetRect = tip.getBoundingClientRect()
         
         // создаем элемент, координаты со смещением от таргета
-        let tip = document.createElement('div')
-        tip.className = 'tooltip tooltip_active'
-        tip.style.left = (targetRect.x - tip.offsetHeight + 20) + 'px'
-        tip.style.top = (targetRect.y - tip.offsetHeight + 20) + 'px'        
-        tip.textContent = target.title
+        let tipNew = document.createElement('div')
+        tipNew.className = 'tooltip tooltip_active'
+        tipNew.style.left = (targetRect.x - tipNew.offsetHeight + 20) + 'px'
+        tipNew.style.top = (targetRect.y - tipNew.offsetHeight + 20) + 'px'        
+        tipNew.textContent = tip.title
 
         // добавляем элемент на страницу
-        document.body.append(tip)        
-    }
-
-    // отключаем переход по ссылке
-    e.preventDefault()
-})
-
-document.addEventListener("mouseout", () => {
-    const tips = [...document.querySelectorAll('.tooltip')]
-    
-    for (const t of tips) {
-        if (t != null) {        
-            // TODO: можно удалить класс активности 
-            // или удалить элемент целиком, вопрос: что лучше?
-            // t.classList.remove('tooltip_active')
-                        
-            t.remove()
-        }   
-    }  
-})
+        document.body.append(tipNew)
+    })
+}
